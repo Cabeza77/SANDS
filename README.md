@@ -1,8 +1,9 @@
-# SANDS by Nicolas Cuello
-# Stars, plANets &amp; Discs in multiple Systems
-# Marie Curie project 
+# SANDS: Stars, plANets &amp; Discs in multiple Systems
 
-Collaborators:
+Marie Curie project number 210021
+PI: Nicolas Cuello
+
+Main collaborators:
 Francois Ménard
 Giuseppe Lodato
 Simone Ceppi
