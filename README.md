@@ -1,2 +1,15 @@
-# SANDS
-Stars, plANets &amp; Discs in multiple Systems
+# SANDS by Nicolas Cuello
+# Stars, plANets &amp; Discs in multiple Systems
+# Marie Curie project 
+
+Collaborators:
+Francois Ménard
+Giuseppe Lodato
+Simone Ceppi
+
+- Phantom: routines and tests for multiple stellar systems.
+- Analysis: useful routines to analyse discs in multiples.
+- DAMUS: Discs And MUltiple Stars module.
+
+
+
