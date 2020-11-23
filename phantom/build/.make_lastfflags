@@ -1,0 +1,1 @@
+-O3 -Wall -Wno-unused-dummy-argument -frecord-marker=4 -gdwarf-2 -finline-functions-called-once -finline-limit=1500 -funroll-loops -ftree-vectorize -std=f2008 -fall-intrinsics -mcmodel=medium -fPIC -fopenmp -fdefault-real-8 -fdefault-double-8
