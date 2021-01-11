@@ -3,6 +3,7 @@
 import os
 import re
 import numpy as np
+import sys
 
 
 def ev2mdot(simname, sinknumber, period, bins, periodave):
@@ -17,9 +18,9 @@ def ev2mdot(simname, sinknumber, period, bins, periodave):
     
     '''
     
-    evfiles=[ev for ev in sorted(os.listdir('./data')) if re.search('^'+simname+'Sink'+str(sinknumber).zfill(4)+'N', ev)]
+    evfiles=[ev for ev in sorted(os.listdir('./')) if (re.search('^'+simname+'Sink'+str(sinknumber).zfill(4)+'N', ev) and re.search('.ev$', ev))]
     
-    datain=np.concatenate([np.loadtxt('./data/'+ev, unpack=False, skiprows=1) for ev in evfiles], axis=0)
+    datain=np.concatenate([np.loadtxt('./'+ev, unpack=False, skiprows=1) for ev in evfiles], axis=0)
         
     dataout=[[0,0,0]]
     dataoutave=[]
@@ -46,10 +47,12 @@ def ev2mdot(simname, sinknumber, period, bins, periodave):
             if (len(dataout)-1)%(bins*periodave)==0:
                 for i in range(0, bins):
                     j=i+j_in
-                    dataoutave.append([dataout[-bins+i][0],
-                                       np.sum(np.array(dataout)[j::bins,2])/
-                                       np.sum(np.array(dataout)[j::bins,0]-np.array(dataout)[j-1:-1:bins,0]),
-                                       np.mean(np.array(dataout)[j::bins,2])])
+                    
+                    dataoutave.append(
+                        [dataout[-bins+i][0],
+                         np.sum(np.array(dataout)[j::bins,2])/np.sum(np.array(dataout)[j::bins,0]-np.array(dataout)[j-1:-1:bins,0]),
+                         np.mean(np.array(dataout)[j::bins,2])])
+                    
                 j_in+=periodave*bins
                 tm_in_av=tmstep[0]
                     
@@ -61,11 +64,26 @@ def ev2mdot(simname, sinknumber, period, bins, periodave):
     return np.array(dataoutave)
 
 if __name__=="__main__":
-    simname='GGT106-visc'#'HD-2'
+    simname='GGT106-visc'
     sinknumber=1
     
     period=1030.91252 #0.341713895
     bins=2
     periodave=10
 
-    print(ev2mdot(simname, sinknumber, period, bins, periodave))
+    if len(sys.argv)==6:
+        simname=sys.argv[1] # 'GGT106-visc'
+        sinknumber=int(sys.argv[2]) # 1
+        
+        period=float(sys.argv[3]) # 1030.91252 #0.341713895
+        bins=int(sys.argv[4]) # 2
+        periodave=int(sys.argv[5]) # 10
+    else:
+        print('Usage: ',sys.argv[0],'simname sinknumber period bins average-over')
+        sys.exit(1)
+
+    
+    print('#time','mdot','accr_mass', sep='\t\t\t\t')
+    for line in ev2mdot(simname, sinknumber, period, bins, periodave):
+        print(line[0], line[1], line[2], sep='\t\t')
+    #print(ev2mdot(simname, sinknumber, period, bins, periodave))
