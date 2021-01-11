@@ -51,7 +51,8 @@ def ev2mdot(simname, sinknumber, period, bins, periodave):
                     dataoutave.append(
                         [dataout[-bins+i][0],
                          np.sum(np.array(dataout)[j::bins,2])/np.sum(np.array(dataout)[j::bins,0]-np.array(dataout)[j-1:-1:bins,0]),
-                         np.mean(np.array(dataout)[j::bins,2])])
+                         #np.mean(np.array(dataout)[j::bins,2])])
+                         np.sum(np.array(dataout)[j::bins,2])])
                     
                 j_in+=periodave*bins
                 tm_in_av=tmstep[0]
